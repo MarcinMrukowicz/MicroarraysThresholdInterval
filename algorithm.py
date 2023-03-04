@@ -1,4 +1,5 @@
 import numpy as np
+from sklearn import metrics
 from sklearn.base import ClassifierMixin, BaseEstimator
 from sklearn.neighbors import KNeighborsClassifier
 
@@ -59,16 +60,21 @@ class Algorithm(BaseEstimator, ClassifierMixin):
         result = []
         for interval in intervals:
             aggregation = self.aggregation(interval)
-            if self.t < aggregation[0]:
-                result.append(0)
-            elif self.t > aggregation[1]:
+            if  aggregation[0] > self.t:
                 result.append(1)
+            elif aggregation[0] < self.t:
+                result.append(0)
             else:
                 result.append(None)
         return result
 
     def __score_auc(self, y, predictions):
-        return (y == predictions).sum() / (len(predictions) - predictions.count(None))
+        predictions_array = np.array(predictions)
+        filter_indices = np.where(predictions_array != None)
+        y_filtered = y[filter_indices].tolist()
+        predictions_filtered = predictions_array[filter_indices].tolist()
+        fpr, tpr, thresholds = metrics.roc_curve(y_filtered, predictions_filtered)
+        return metrics.auc(fpr, tpr)
 
     def __score_coverage(self, predictions):
         return 1 - self.__score_u_area(predictions)

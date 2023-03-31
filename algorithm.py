@@ -14,6 +14,7 @@ class Algorithm(BaseEstimator, ClassifierMixin):
         self.n_jobs = n_jobs
 
     def fit(self, X, y=None):
+        self.classes_ = np.sort(np.unique(y))
         self.__set_classifiers()
         X_splitted = self.__split_dataset(X)  # podział na podzbiory
 
@@ -24,6 +25,20 @@ class Algorithm(BaseEstimator, ClassifierMixin):
 
         return self
 
+    # metoda predict oblicza "ostre" labele, wykonując progowanie
+    def predict(self, X):
+        predictions = self.predict_proba(X)
+        result = []
+        for aggregation in predictions:
+            if self.t < aggregation[0]:  # down(u) > t
+                result.append(1)  # main class
+            elif aggregation[1] < self.t:  # up(u) < t
+                result.append(0)  # subordinate class
+            else:
+                result.append(-1)  # not belong to any class
+        return np.array(result)
+
+    # tutaj zostaje
     def predict_proba(self, X):
         X_splitted = self.__split_dataset(X)  # podział na podzbiory
         intervals = np.empty((len(X), self.s,
@@ -43,13 +58,17 @@ class Algorithm(BaseEstimator, ClassifierMixin):
         return predictions
 
     def score(self, X, y, sample_weight=None):
+        return self.score_acc(X, y, sample_weight)
+
+    def score_acc(self, X, y, sample_weight=None):
         predictions = self.predict(X)
-        score_auc = self.__score_auc(y, predictions)
+        # print(predictions)
+        score_acc = self.__score__acc(y, predictions, X)
         score_coverage = self.__score_coverage(predictions)
         score_u_area = self.__score_u_area(predictions)
 
-        print('scores:', score_auc, score_coverage, score_u_area)
-        return score_auc
+        print('scores:', score_acc, score_coverage, score_u_area)
+        return score_acc, score_coverage, score_u_area
 
     def __set_classifiers(self):
         self.classifiers = [
@@ -64,25 +83,21 @@ class Algorithm(BaseEstimator, ClassifierMixin):
         result = []
         for interval in intervals:  # interval - lista s przedziałów [down(u), up(u)] dla obiektu u
             aggregation = self.aggregation(interval)  # agregacja przedziałów, wynik [down(u), up(u)]
-            if aggregation[0] > self.t:  # down(u) > t
-                result.append(1)  # main class
-            elif aggregation[1] < self.t:  # up(u) < t
-                result.append(0)  # subordinate class
-            else:
-                result.append(None)  # not belong to any class
-        return result
+            result.append(aggregation)
+        return np.array(result)
 
-    def __score_auc(self, y, predictions):
+    def __score__acc(self, y, predictions, X):
         predictions_array = np.array(predictions)
         filter_indices = np.where(
-            predictions_array != None)  # wyszukanie indeksów gdzie nie ma obiektów niesklasyfikowanych
-        y_filtered = y[filter_indices].tolist()  # filtrowanie rzeczywistych klas po wyszukanych indeksach
+            predictions_array != -1)  # wyszukanie indeksów gdzie nie ma obiektów niesklasyfikowanych
+        y_filtered = y[filter_indices] #.tolist()  # filtrowanie rzeczywistych klas po wyszukanych indeksach
         predictions_filtered = predictions_array[
-            filter_indices].tolist()  # filtrowanie predykcji po wyszukanych indeksach
-        return metrics.roc_auc_score(y_filtered, predictions_filtered)
+            filter_indices]  # filtrowanie predykcji po wyszukanych indeksach
+        return metrics.accuracy_score(y_filtered, predictions_filtered)
 
     def __score_coverage(self, predictions):
         return 1 - self.__score_u_area(predictions)
 
     def __score_u_area(self, predictions):
-        return predictions.count(None) / len(predictions)  # liczba niesklasyfikowanych / liczba wszystkich obiektów
+        predictions = predictions.tolist()
+        return predictions.count(-1) / len(predictions)  # liczba niesklasyfikowanych / liczba wszystkich obiektów

@@ -21,15 +21,6 @@ seed = np.random.RandomState(0)
 dataset = Dataset('DLBCL-Stanford')
 
 if __name__ == '__main__':
-    steps = []
-    steps.append(('scaler', ))
-    steps.append(('rfe', RFE(estimator=SVC(kernel='linear', random_state=seed), step=1,
-                             n_features_to_select=0.1))) # wybranie 10% cech
-    # ustawiono na sztywno próg t, do policzenia accuracy warto zbadać różne progi, zwłaszcza jakby
-    # wyniki nie wychodziły bardzo dobrze
-    # agregacja na razie jest jedna
-    steps.append(('algorithm', Algorithm(s=50, k=[3, 5, 7], t=0.8, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1)))
-
 
     # tutaj ustawiono seed - do pracy można z tego zrezygnować, albo uruchomić dla różnych seedów
     cv = LeaveOneOut() #StratifiedKFold(n_splits=2, random_state=1, shuffle=True)
@@ -83,7 +74,7 @@ if __name__ == '__main__':
         scaller.fit(train_data, dataset.y[train_index])
         X_scaled = scaller.transform(train_data)
 
-        rfe = RFE(estimator=SVC(kernel='linear', random_state=seed), step=1000,
+        rfe = RFE(estimator=SVC(kernel='linear', random_state=seed), step=1,
                   n_features_to_select=0.1)
         rfe.fit(X_scaled, dataset.y[train_index])
         X_filtered = rfe.transform(X_scaled)

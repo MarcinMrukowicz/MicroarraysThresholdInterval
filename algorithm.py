@@ -28,7 +28,7 @@ class Algorithm(BaseEstimator, ClassifierMixin):
     # metoda predict oblicza "ostre" labele, wykonując progowanie
     def predict(self, X):
         predictions = self.predict_proba(X)
-        print(predictions)
+        # print(predictions)
         result = []
         for aggregation in predictions:
             if self.t < aggregation[0]:  # down(u) > t
@@ -66,12 +66,12 @@ class Algorithm(BaseEstimator, ClassifierMixin):
 
     def score_acc(self, X, y, sample_weight=None):
         predictions = self.predict(X)
-        print(predictions)
+        # print(predictions)
         score_acc = self.__score__acc(y, predictions, X)
         score_coverage = self.__score_coverage(predictions)
         score_u_area = self.__score_u_area(predictions)
 
-        print('scores:', score_acc, score_coverage, score_u_area)
+        # print('scores:', score_acc, score_coverage, score_u_area)
         return score_acc, score_coverage, score_u_area
 
     def __set_classifiers(self):

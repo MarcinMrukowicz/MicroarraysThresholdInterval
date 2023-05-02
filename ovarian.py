@@ -61,6 +61,7 @@ if __name__ == '__main__':
     j = 0
 
     for (train_index, test_index) in cv.split(X=dataset.X, y=dataset.y):
+        print("BEGIN of fold no ", j)
         imputer = None
         dataset.X = dataset.X.where(dataset.X != ' ?', None)
         print(dataset.X.iloc[1][3])
@@ -84,7 +85,7 @@ if __name__ == '__main__':
                   n_features_to_select=0.1)
         rfe.fit(X_scaled, dataset.y[train_index])
         X_filtered = rfe.transform(X_scaled)
-        print('train y', dataset.y[train_index])
+        # print('train y', dataset.y[train_index])
 
         test_data = dataset.X.iloc[test_index]
         contains_missing_in_test = test_data.isnull().values.any()
@@ -99,10 +100,11 @@ if __name__ == '__main__':
             if len(result[i]) == 0: result[i].append(str(est))
             est.fit(X_filtered, dataset.y[train_index])
 
-            print('true y labels', dataset.y[test_index])
+            # print('true y labels', dataset.y[test_index])
             result[i].append(est.score(filtered_test, dataset.y[test_index]))
-            print(est.predict(filtered_test))
-            print(result)
+            # print(est.predict(filtered_test))
+            # print(result)
+            print('Classifier no ', i, ' of ', len(algorithms))
         j += 1
 
 

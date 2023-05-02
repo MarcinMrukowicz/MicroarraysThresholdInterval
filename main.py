@@ -1,12 +1,12 @@
 import numpy as np
 from sklearn.feature_selection import RFE
 from sklearn.metrics import accuracy_score
-from sklearn.model_selection import GridSearchCV, cross_val_score, StratifiedKFold
+from sklearn.model_selection import GridSearchCV, cross_val_score, StratifiedKFold, LeaveOneOut
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import RobustScaler
 from sklearn.svm import SVC
 
-from aggregations import A1
+from aggregations import A1Aggregation
 from algorithm import Algorithm
 from dataset import Dataset
 
@@ -21,11 +21,11 @@ if __name__ == '__main__':
     # ustawiono na sztywno próg t, do policzenia accuracy warto zbadać różne progi, zwłaszcza jakby
     # wyniki nie wychodziły bardzo dobrze
     # agregacja na razie jest jedna
-    steps.append(('algorithm', Algorithm(s=50, k=[3, 5, 7], t=0.4, aggregation=A1, random_state=seed, n_jobs=-1)))
+    steps.append(('algorithm', Algorithm(s=50, k=[3, 5, 7], t=0.4, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1)))
 
 
     # tutaj ustawiono seed - do pracy można z tego zrezygnować, albo uruchomić dla różnych seedów
-    cv = StratifiedKFold(n_splits=5, random_state=1, shuffle=True)
+    cv = StratifiedKFold(n_splits=10, random_state=1, shuffle=True)
 
     results = []
 

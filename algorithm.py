@@ -28,6 +28,7 @@ class Algorithm(BaseEstimator, ClassifierMixin):
     # metoda predict oblicza "ostre" labele, wykonując progowanie
     def predict(self, X):
         predictions = self.predict_proba(X)
+        print(predictions)
         result = []
         for aggregation in predictions:
             if self.t < aggregation[0]:  # down(u) > t
@@ -53,6 +54,9 @@ class Algorithm(BaseEstimator, ClassifierMixin):
             interval = np.column_stack((predictions.min(axis=1), predictions.max(
                 axis=1)))  # wybór minimalnej i maksymalnej wartości (przedziału) dla każdego elementu
             intervals[:, s_index] = interval  # zapis przedziału
+        # print('INTERVALS:')
+        # print(intervals)
+        # print('END INTERVALS')
         predictions = self.__get_predictions(intervals)  # agregacja i określenie klasy
 
         return predictions
@@ -62,7 +66,7 @@ class Algorithm(BaseEstimator, ClassifierMixin):
 
     def score_acc(self, X, y, sample_weight=None):
         predictions = self.predict(X)
-        # print(predictions)
+        print(predictions)
         score_acc = self.__score__acc(y, predictions, X)
         score_coverage = self.__score_coverage(predictions)
         score_u_area = self.__score_u_area(predictions)
@@ -82,7 +86,7 @@ class Algorithm(BaseEstimator, ClassifierMixin):
     def __get_predictions(self, intervals):
         result = []
         for interval in intervals:  # interval - lista s przedziałów [down(u), up(u)] dla obiektu u
-            aggregation = self.aggregation(interval)  # agregacja przedziałów, wynik [down(u), up(u)]
+            aggregation = self.aggregation.aggregate_numpy_arrays_representation(interval)  # agregacja przedziałów, wynik [down(u), up(u)]
             result.append(aggregation)
         return np.array(result)
 

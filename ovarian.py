@@ -48,8 +48,9 @@ if __name__ == '__main__':
                 for t in (0.4, 0.5, 0.6): #(0.4, 0.45, 0.5, 0.55, 0.6):
                     algorithms.append(Algorithm(s=s, k=k, aggregation=a, t=t, n_jobs=-1, random_state=seed))
 
-    algorithms = [
+    algorithms += [
         KNeighborsClassifier(n_neighbors=1),
+        KNeighborsClassifier(n_neighbors=2),
         KNeighborsClassifier(n_neighbors=3),
         KNeighborsClassifier(n_neighbors=5)
     ]
@@ -81,7 +82,7 @@ if __name__ == '__main__':
         scaller.fit(train_data, dataset.y[train_index])
         X_scaled = scaller.transform(train_data)
 
-        rfe = RFE(estimator=SVC(kernel='linear', random_state=seed), step=1,
+        rfe = RFE(estimator=SVC(kernel='linear', random_state=seed), step=500,
                   n_features_to_select=0.1)
         rfe.fit(X_scaled, dataset.y[train_index])
         X_filtered = rfe.transform(X_scaled)

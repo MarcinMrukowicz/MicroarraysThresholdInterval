@@ -34,210 +34,26 @@ if __name__ == '__main__':
     # tutaj ustawiono seed - do pracy można z tego zrezygnować, albo uruchomić dla różnych seedów
     cv = LeaveOneOut() #StratifiedKFold(n_splits=2, random_state=1, shuffle=True)
 
-    algorithms = [Algorithm(s=50, k=[3, 5, 7], t=0.8, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                 Algorithm(s=50, k=[3, 5, 7], t=0.8, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                 Algorithm(s=50, k=[3, 5, 7], t=0.8, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                 Algorithm(s=50, k=[3, 5, 7], t=0.8, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                 Algorithm(s=50, k=[3, 5, 7], t=0.8, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                 Algorithm(s=50, k=[3, 5, 7], t=0.8, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                 Algorithm(s=50, k=[3, 5, 7], t=0.8, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                 Algorithm(s=50, k=[3, 5, 7], t=0.8, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                 Algorithm(s=50, k=[3, 5, 7], t=0.8, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                 Algorithm(s=50, k=[3, 5, 7], t=0.8, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                 Algorithm(s=10, k=[3, 5, 7], t=0.8, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[3, 5, 7], t=0.8, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[3, 5, 7], t=0.8, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[3, 5, 7], t=0.8, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[3, 5, 7], t=0.8, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[3, 5, 7], t=0.8, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[3, 5, 7], t=0.8, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[3, 5, 7], t=0.8, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[3, 5, 7], t=0.8, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[3, 5, 7], t=0.8, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[3, 5, 7], t=0.8, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[3, 5, 7], t=0.8, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[3, 5, 7], t=0.8, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[3, 5, 7], t=0.8, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[3, 5, 7], t=0.8, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[3, 5, 7], t=0.8, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[3, 5, 7], t=0.8, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[3, 5, 7], t=0.8, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[3, 5, 7], t=0.8, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[3, 5, 7], t=0.8, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[3, 5, 7], t=0.8, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[3, 5, 7], t=0.8, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[3, 5, 7], t=0.8, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[3, 5, 7], t=0.8, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[3, 5, 7], t=0.8, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[3, 5, 7], t=0.8, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[3, 5, 7], t=0.8, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[3, 5, 7], t=0.8, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[3, 5, 7], t=0.8, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[3, 5, 7], t=0.8, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.8, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.8, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.8, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.8, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.5, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.5, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.5, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.5, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.5, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.5, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.5, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.5, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.5, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.5, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.5, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.5, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.5, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.5, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.5, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.5, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.5, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.5, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.5, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.5, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.5, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.5, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.5, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.5, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.5, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.5, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.5, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.5, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.5, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.5, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.5, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.5, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.5, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.5, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.5, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.5, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.5, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.5, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.5, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.5, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.2, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.2, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.2, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.2, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.2, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.2, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.2, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.2, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.2, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=50, k=[1, 3], t=0.2, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.2, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.2, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.2, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.2, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.2, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.2, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.2, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.2, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.2, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=10, k=[1, 3], t=0.2, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.2, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.2, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.2, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.2, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.2, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.2, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.2, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.2, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.2, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=5, k=[1, 3], t=0.2, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.2, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.2, aggregation=A2Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.2, aggregation=A3Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.2, aggregation=A4Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.2, aggregation=A5Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.2, aggregation=A6Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.2, aggregation=A7Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.2, aggregation=A8Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.2, aggregation=A9Aggregation(), random_state=seed, n_jobs=-1),
-                  Algorithm(s=2, k=[1, 3], t=0.2, aggregation=A10Aggregation(), random_state=seed, n_jobs=-1),
-                 KNeighborsClassifier(n_neighbors=1),
-                 KNeighborsClassifier(n_neighbors=3),
-                 KNeighborsClassifier(n_neighbors=5)
-                  ]
+    algorithms = []
+
+    for s in [2, 5, 10, 15, 20, 30, 50]:
+        for k in ([1], [2]):
+            for a in [A1Aggregation(), A3Aggregation(), A4Aggregation(), A5Aggregation(), A6Aggregation(), A8Aggregation(), A9Aggregation(), A10Aggregation()]:
+                for t in (0.4, 0.5, 0.6): #(0.4, 0.45, 0.5, 0.55, 0.6):
+                    algorithms.append(Algorithm(s=s, k=k, aggregation=a, t=t, n_jobs=-1, random_state=seed))
+
+    for s in [2, 5, 10, 15, 20, 30, 50]:
+        for k in ([1, 2],):
+            for a in [A1Aggregation(), A2Aggregation(), A3Aggregation(), A4Aggregation(), A5Aggregation(), A6Aggregation(), A7Aggregation(), A8Aggregation(), A9Aggregation(), A10Aggregation()]:
+                for t in (0.4, 0.5, 0.6): #(0.4, 0.45, 0.5, 0.55, 0.6):
+                    algorithms.append(Algorithm(s=s, k=k, aggregation=a, t=t, n_jobs=-1, random_state=seed))
+
+    algorithms += [
+        KNeighborsClassifier(n_neighbors=1),
+        KNeighborsClassifier(n_neighbors=2),
+        KNeighborsClassifier(n_neighbors=3),
+        KNeighborsClassifier(n_neighbors=5)
+    ]
 
     result = []
     for i in range(len(algorithms)):
@@ -246,6 +62,7 @@ if __name__ == '__main__':
     j = 0
 
     for (train_index, test_index) in cv.split(X=dataset.X, y=dataset.y):
+        print("BEGIN of fold no ", j)
         imputer = None
         dataset.X = dataset.X.where(dataset.X != ' ?', None)
         print(dataset.X.iloc[1][3])
@@ -269,7 +86,7 @@ if __name__ == '__main__':
                   n_features_to_select=0.1)
         rfe.fit(X_scaled, dataset.y[train_index])
         X_filtered = rfe.transform(X_scaled)
-        print('train y', dataset.y[train_index])
+        # print('train y', dataset.y[train_index])
 
         test_data = dataset.X.iloc[test_index]
         contains_missing_in_test = test_data.isnull().values.any()
@@ -284,10 +101,11 @@ if __name__ == '__main__':
             if len(result[i]) == 0: result[i].append(str(est))
             est.fit(X_filtered, dataset.y[train_index])
 
-            print('true y labels', dataset.y[test_index])
+            # print('true y labels', dataset.y[test_index])
             result[i].append(est.score(filtered_test, dataset.y[test_index]))
-            print(est.predict(filtered_test))
-            print(result)
+            print('Classifier no ', i, ' of ', len(algorithms))
+            # print(est.predict(filtered_test))
+            # print(result)
         j += 1
 
 

@@ -28,7 +28,7 @@ if __name__ == '__main__':
     algorithms = []
 
     for s in [2, 5, 10, 15, 20, 30, 50]:
-        for k in ([1],):
+        for k in ([1], [2]):
             for a in [A1Aggregation(), A3Aggregation(), A4Aggregation(), A5Aggregation(), A6Aggregation(), A8Aggregation(), A9Aggregation(), A10Aggregation()]:
                 for t in (0.4, 0.5, 0.6): #(0.4, 0.45, 0.5, 0.55, 0.6):
                     algorithms.append(Algorithm(s=s, k=k, aggregation=a, t=t, n_jobs=-1, random_state=seed))
@@ -79,7 +79,7 @@ if __name__ == '__main__':
                   n_features_to_select=0.1)
         rfe.fit(X_scaled, dataset.y[train_index])
         X_filtered = rfe.transform(X_scaled)
-        print('train y', dataset.y[train_index])
+        # print('train y', dataset.y[train_index])
 
         test_data = dataset.X.iloc[test_index]
         contains_missing_in_test = test_data.isnull().values.any()

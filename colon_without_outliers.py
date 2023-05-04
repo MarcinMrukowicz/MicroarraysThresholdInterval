@@ -17,10 +17,21 @@ from algorithm import Algorithm
 from dataset import Dataset
 
 seed = np.random.RandomState(0)
-#dataset = Dataset('ovarian_61902')
-dataset = Dataset('DLBCL-Stanford')
+# Outliers mentioned in this paper
+# https://www.researchgate.net/publication/228554763_Detecting_outlying_samples_in_microarray_data_A_critical_assessment_of_the_effect_of_outliers_on_sample_classification
+dataset = Dataset('colonTumor', ["2p", "6p", "37p", "2n", "8n", "34n", "36n"])
+#dataset = Dataset('DLBCL-Stanford')
 
 if __name__ == '__main__':
+    steps = []
+    steps.append(('scaler', ))
+    steps.append(('rfe', RFE(estimator=SVC(kernel='linear', random_state=seed), step=1,
+                             n_features_to_select=0.1))) # wybranie 10% cech
+    # ustawiono na sztywno próg t, do policzenia accuracy warto zbadać różne progi, zwłaszcza jakby
+    # wyniki nie wychodziły bardzo dobrze
+    # agregacja na razie jest jedna
+    steps.append(('algorithm', Algorithm(s=50, k=[3, 5, 7], t=0.8, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1)))
+
 
     # tutaj ustawiono seed - do pracy można z tego zrezygnować, albo uruchomić dla różnych seedów
     cv = LeaveOneOut() #StratifiedKFold(n_splits=2, random_state=1, shuffle=True)
@@ -45,8 +56,6 @@ if __name__ == '__main__':
         KNeighborsClassifier(n_neighbors=3),
         KNeighborsClassifier(n_neighbors=5)
     ]
-
-
 
     result = []
     for i in range(len(algorithms)):
@@ -113,7 +122,7 @@ if __name__ == '__main__':
         results = np.array(result[i][1:])
 
         if 'Algorithm' in result[i][0]:
-            w = pd.DataFrame({'algorithm': result[i][0], 'agg': str((algorithms[i].aggregation)),
+            w = pd.DataFrame({'algorithm': result[i][0],
                               'accuracy': np.nanmean(results[:, 0]), 'k': str(algorithms[i].k),
                               's': algorithms[i].s, 't': algorithms[i].t,
                               'coverage': np.mean(results[:, 1]), 'UArea': np.mean(results[:, 2])
@@ -122,7 +131,6 @@ if __name__ == '__main__':
             final_results.append(w)
         else:
             final_results.append(pd.DataFrame({'algorithm': result[i][0],
-                                               'agg': np.NAN,
                                                'accuracy': np.mean(results),
                                                'k': np.NAN,
                                                's': np.NAN,
@@ -139,4 +147,4 @@ if __name__ == '__main__':
 
 fin_res = pd.concat(final_results)
 print(fin_res)
-fin_res.to_excel('RESULTS_DLBCL_final_v2.xlsx')
+fin_res.to_excel('RESULTS_COLON_Without_Outliers_final_v2.xlsx')

@@ -64,7 +64,7 @@ for func in aggregation_func:
                     color="blue", edgecolor='none')
     ax.plot_surface(X, Y, Z2, rstride=1, cstride=1, alpha=0.2,
                     color="red", edgecolor='none')
-    plt.title(func.change_aggregation_to_name(func()))
+    plt.title(func.change_aggregation_to_name(func())+" k(1,2)")
     ticks = x
     ax.set_xticks(ticks)
     ax.set_xticklabels([str(i) for i in x1], rotation = 10,
@@ -78,3 +78,56 @@ for func in aggregation_func:
     plt.savefig(f"img/k=1,2{func.change_aggregation_to_name(func())}.jpg")
     plt.show()
 
+
+k = [2,3]
+possible_coefficients = set()
+for k_ in k:
+    for i in range(len(k)+1):
+        possible_coefficients.add(round(i/k_,4))
+possible_coefficients = list(possible_coefficients)
+possible_coefficients.sort()
+print(possible_coefficients)
+
+intervals=[]
+for i in possible_coefficients:
+    for j in possible_coefficients:
+        interval = ((min([i,j]), max([i,j])))
+        if interval not in intervals:
+            intervals.append(interval)
+
+print(intervals)
+
+x = np.linspace(0,1.0,len(intervals))
+x1 = intervals
+y = np.linspace(0,1.0,len(intervals))
+x2 = intervals
+X,Y = np.meshgrid(x, y)
+
+for func in aggregation_func:
+    ax = plt.axes(projection='3d')
+    Z1 = copy.copy(X)
+    Z2 = copy.copy(X)
+    for i,val_i in enumerate(x):
+        for j, val_j in enumerate(y):
+            aggregated = func().aggregate_numpy_arrays_representation(np.array([x1[i], x2[j]]))
+            Z1[i,j] = aggregated[0]
+            Z2[i,j] = aggregated[1]
+            ax.plot3D([val_i,val_i], [val_j,val_j],[aggregated[0],aggregated[1]], color="black")
+
+    ax.plot_surface(X, Y, Z1, rstride=1, cstride=1,alpha=0.2,
+                    color="blue", edgecolor='none')
+    ax.plot_surface(X, Y, Z2, rstride=1, cstride=1, alpha=0.2,
+                    color="red", edgecolor='none')
+    plt.title(func.change_aggregation_to_name(func())+" k(1,2,3)")
+    ticks = x
+    ax.set_xticks(ticks)
+    ax.set_xticklabels([str(i) for i in x1], rotation = 10,
+                       verticalalignment='baseline',
+                       horizontalalignment='right'
+                       )
+    ax.set_yticks(ticks)
+    ax.set_yticklabels([str(j) for j in x2] , rotation = -10,
+                       verticalalignment='baseline',
+                       horizontalalignment='left')
+    plt.savefig(f"img/k=1,2,3{func.change_aggregation_to_name(func())}.jpg")
+    plt.show()

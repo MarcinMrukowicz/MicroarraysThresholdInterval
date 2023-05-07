@@ -28,7 +28,7 @@ if __name__ == '__main__':
     algorithms = []
 
     for s in [2, 5, 10, 15, 20, 30, 50]:
-        for k in ([1],):
+        for k in ([1], [2]):
             for a in [A1Aggregation(), A3Aggregation(), A4Aggregation(), A5Aggregation(), A6Aggregation(), A8Aggregation(), A9Aggregation(), A10Aggregation()]:
                 for t in (0.4, 0.5, 0.6): #(0.4, 0.45, 0.5, 0.55, 0.6):
                     algorithms.append(Algorithm(s=s, k=k, aggregation=a, t=t, n_jobs=-1, random_state=seed))
@@ -136,4 +136,4 @@ if __name__ == '__main__':
 
 fin_res = pd.concat(final_results)
 print(fin_res)
-fin_res.to_excel('RESULTS_prostate.xlsx')
+fin_res.to_excel('RESULTS_prostate_final_v3.xlsx')

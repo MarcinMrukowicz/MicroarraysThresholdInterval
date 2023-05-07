@@ -113,7 +113,7 @@ if __name__ == '__main__':
         results = np.array(result[i][1:])
 
         if 'Algorithm' in result[i][0]:
-            w = pd.DataFrame({'algorithm': result[i][0], 'agg': str((algorithms[i].aggregation)),
+            w = pd.DataFrame({'algorithm': result[i][0],
                               'accuracy': np.nanmean(results[:, 0]), 'k': str(algorithms[i].k),
                               's': algorithms[i].s, 't': algorithms[i].t,
                               'coverage': np.mean(results[:, 1]), 'UArea': np.mean(results[:, 2])
@@ -122,7 +122,6 @@ if __name__ == '__main__':
             final_results.append(w)
         else:
             final_results.append(pd.DataFrame({'algorithm': result[i][0],
-                                               'agg': np.NAN,
                                                'accuracy': np.mean(results),
                                                'k': np.NAN,
                                                's': np.NAN,
@@ -139,4 +138,4 @@ if __name__ == '__main__':
 
 fin_res = pd.concat(final_results)
 print(fin_res)
-fin_res.to_excel('RESULTS_DLBCL.xlsx')
+fin_res.to_excel('RESULTS_DLBCL_final_v3.xlsx')

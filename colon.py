@@ -21,18 +21,7 @@ dataset = Dataset('colonTumor')
 #dataset = Dataset('DLBCL-Stanford')
 
 if __name__ == '__main__':
-    steps = []
-    steps.append(('scaler', ))
-    steps.append(('rfe', RFE(estimator=SVC(kernel='linear', random_state=seed), step=1,
-                             n_features_to_select=0.1))) # wybranie 10% cech
-    # ustawiono na sztywno próg t, do policzenia accuracy warto zbadać różne progi, zwłaszcza jakby
-    # wyniki nie wychodziły bardzo dobrze
-    # agregacja na razie jest jedna
-    steps.append(('algorithm', Algorithm(s=50, k=[3, 5, 7], t=0.8, aggregation=A1Aggregation(), random_state=seed, n_jobs=-1)))
-
-
-    # tutaj ustawiono seed - do pracy można z tego zrezygnować, albo uruchomić dla różnych seedów
-    cv = LeaveOneOut() #StratifiedKFold(n_splits=2, random_state=1, shuffle=True)
+    cv = LeaveOneOut()
 
     algorithms = []
 
@@ -86,7 +75,6 @@ if __name__ == '__main__':
                   n_features_to_select=0.1)
         rfe.fit(X_scaled, dataset.y[train_index])
         X_filtered = rfe.transform(X_scaled)
-        # print('train y', dataset.y[train_index])
 
         test_data = dataset.X.iloc[test_index]
         contains_missing_in_test = test_data.isnull().values.any()
@@ -101,19 +89,9 @@ if __name__ == '__main__':
             if len(result[i]) == 0: result[i].append(str(est))
             est.fit(X_filtered, dataset.y[train_index])
 
-            # print('true y labels', dataset.y[test_index])
             result[i].append(est.score(filtered_test, dataset.y[test_index]))
             print('Classifier no ', i, ' of ', len(algorithms))
-            # print(est.predict(filtered_test))
-            # print(result)
         j += 1
-
-
-    # tutaj pewnie jakoś pasuje do excela eksportować wyniki
-    # strukturę danych ze zwykłej krotki można zmienić na słownik, albo named tuple
-    # jeżeli będzie dogodniej
-
-
 
     final_results = []
     for i in range(len(algorithms)):
@@ -137,11 +115,7 @@ if __name__ == '__main__':
                                                'UArea': np.NAN
                                                }, index=[i]))
 
-
         print('results_as_numpy_array', results)
-        # print('mean accuracy', np.nanmean(results[:, 0]))
-        # print('mean coverage', np.mean(results[:, 1]))
-        # print('mean UArea', np.mean(results[:, 2]))
 
 fin_res = pd.concat(final_results)
 print(fin_res)

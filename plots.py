@@ -76,6 +76,7 @@ for func in aggregation_func:
                        verticalalignment='baseline',
                        horizontalalignment='left')
     plt.savefig(f"img/k=1,2{func.change_aggregation_to_name(func())}.jpg")
+    ax.view_init(10, 60)
     plt.show()
 
 

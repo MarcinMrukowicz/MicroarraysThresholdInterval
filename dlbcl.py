@@ -1,29 +1,20 @@
-from statistics import stdev
-
-import numpy as np
 import pandas as pd
 from sklearn.feature_selection import RFE
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import GridSearchCV, cross_val_score, StratifiedKFold, LeaveOneOut
+from sklearn.model_selection import LeaveOneOut
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import RobustScaler
 from sklearn.svm import SVC
 from sklearn.impute import KNNImputer
-from sklearn.tree import DecisionTreeClassifier
 
 from aggregations import *
 from algorithm import Algorithm
 from dataset import Dataset
 
 seed = np.random.RandomState(0)
-#dataset = Dataset('ovarian_61902')
 dataset = Dataset('DLBCL-Stanford')
 
 if __name__ == '__main__':
-
-    # tutaj ustawiono seed - do pracy można z tego zrezygnować, albo uruchomić dla różnych seedów
-    cv = LeaveOneOut() #StratifiedKFold(n_splits=2, random_state=1, shuffle=True)
+    cv = LeaveOneOut()
 
     algorithms = []
 
@@ -79,7 +70,6 @@ if __name__ == '__main__':
                   n_features_to_select=0.1)
         rfe.fit(X_scaled, dataset.y[train_index])
         X_filtered = rfe.transform(X_scaled)
-        # print('train y', dataset.y[train_index])
 
         test_data = dataset.X.iloc[test_index]
         contains_missing_in_test = test_data.isnull().values.any()
@@ -94,19 +84,10 @@ if __name__ == '__main__':
             if len(result[i]) == 0: result[i].append(str(est))
             est.fit(X_filtered, dataset.y[train_index])
 
-            # print('true y labels', dataset.y[test_index])
             result[i].append(est.score(filtered_test, dataset.y[test_index]))
             print('Classifier no ', i, ' of ', len(algorithms))
-            # print(est.predict(filtered_test))
-            # print(result)
+
         j += 1
-
-
-    # tutaj pewnie jakoś pasuje do excela eksportować wyniki
-    # strukturę danych ze zwykłej krotki można zmienić na słownik, albo named tuple
-    # jeżeli będzie dogodniej
-
-
 
     final_results = []
     for i in range(len(algorithms)):
@@ -132,9 +113,6 @@ if __name__ == '__main__':
 
 
         print('results_as_numpy_array', results)
-        # print('mean accuracy', np.nanmean(results[:, 0]))
-        # print('mean coverage', np.mean(results[:, 1]))
-        # print('mean UArea', np.mean(results[:, 2]))
 
 fin_res = pd.concat(final_results)
 print(fin_res)
